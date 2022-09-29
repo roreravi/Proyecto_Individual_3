@@ -25,20 +25,20 @@ def main_page():
 
     with col3:
         st.write(' ')
-    st.markdown("<h1 style='text-align: center; color: black;'>DE CARA HACIA EL FUTURO</h1>", unsafe_allow_html=True) 
-    st.sidebar.markdown('''
-	* La Revolución Henry 
-	* El HENRYCOIN
-	* Crisis U Oportunidad''')
+    st.markdown("<h1 style='text-align: center; color: white;'>DE CARA HACIA EL FUTURO</h1>", unsafe_allow_html=True) 
+    #st.sidebar.markdown('''
+	#* La Revolución Henry 
+	#* El HENRYCOIN
+	#* Crisis U Oportunidad''')
 
     st.markdown('''
 	### "Estamos repensando la educación en latinoamerica para brindar oportunidades y desarrollar talento. Súmate a nuestra revolución."
     ''')
-    st.markdown("<h1 style='text-align: center; color: black;'>¿Y si ahora repensamos la Economía?</h1>", unsafe_allow_html=True)   
+    st.markdown("<h1 style='text-align: center; color: white;'>¿Y si ahora repensamos la Economía?</h1>", unsafe_allow_html=True)   
 
 
 def pageII():
-    st.markdown("<h1 style='text-align: center; color: black;'>HENRYCOIN</h1>", unsafe_allow_html=True) 
+    st.markdown("<h1 style='text-align: center; color: white;'>HENRYCOIN</h1>", unsafe_allow_html=True) 
     image = Image.open('images/henrycoin.jpeg')
     col1, col2, col3 = st.columns(3)
 
@@ -50,10 +50,10 @@ def pageII():
 
     with col3:
         st.write(' ')
-    st.markdown("<h3 style='text-align: center; color: black;'>¿ES EL MOMENTO OPORTUNO PARA EL LANZAMIENTO?</h1>", unsafe_allow_html=True) 
+    st.markdown("<h3 style='text-align: center; color: white;'>¿ES EL MOMENTO OPORTUNO PARA EL LANZAMIENTO?</h1>", unsafe_allow_html=True) 
    
 def pageIII():  
-    st.markdown("<h3 style='text-align: center; color: black;'>¿OTRO CRIPTOINVIERNO?</h1>", unsafe_allow_html=True)
+    st.markdown("<h3 style='text-align: center; color: white;'>¿OTRO CRIPTOINVIERNO?</h1>", unsafe_allow_html=True)
     #st.sidebar.markdown('CRIPTOMONEDA')
     market_name = 'BTC'
     resolution = 60 * 60
@@ -107,7 +107,7 @@ def pageIII():
     st.plotly_chart(fig)
 
 def pageIV():
-    st.markdown("<h3 style='text-align: center; color: black;'>¿Y COMO ESTAN LAS EMPRESAS TECNOLOGICAS?</h1>", unsafe_allow_html=True)
+    st.markdown("<h3 style='text-align: center; color: white;'>¿Y COMO ESTAN LAS EMPRESAS TECNOLOGICAS?</h1>", unsafe_allow_html=True)
     st.sidebar.markdown('Empresa')
     key = 'VS12DFNCBNZZ71BZ' #https://www.alphavantage.co/
     symbol = 'AAPL' #'IBM', AAPL, MSFT, YHOO, GOOG, RHT, LNVGY, BABA, CAT, AMZN
@@ -143,18 +143,19 @@ def pageIV():
     st.plotly_chart(fig)
 
 def pageVI():
-    st.markdown("<h3 style='text-align: center; color: black;'>INFLACION EN ESTADOS UNIDOS</h1>", unsafe_allow_html=True)
+    #st.markdown("<h3 style='text-align: center; color: black;'>INFLACION EN ESTADOS UNIDOS</h1>", unsafe_allow_html=True)
     image = Image.open('images/united-states-inflation-cpi.png')
-    col1, col2, col3 = st.columns(3)
+    st.image(image)
+    #col1, col2, col3 = st.columns(3)
 
-    with col1:
-        st.write(' ')
+    #with col1:
+     #   st.write(' ')
 
-    with col2:
-        st.image(image)
+    #with col2:
+     #   st.image(image)
 
-    with col3:
-        st.write(' ')
+    #with col3:
+     #   st.write(' ')
 page_names_to_funcs = {
     'I. Introducción': main_page,
     'II. ¿Es el momento oportuno?': pageII,
