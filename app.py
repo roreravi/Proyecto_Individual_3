@@ -1,19 +1,13 @@
-from altair.vegalite.v4.schema import Color
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
 from plotly.subplots import make_subplots
-import numpy as np
 from PIL import Image
 import time
 import requests
 import plotly.graph_objects as go
 
-
-
 def main_page():
-	# Título y subtítulo.
-	#st.title('Introducción a Streamlit')
+	
     image = Image.open('images/henrylogo1.png')
     col1, col2, col3 = st.columns(3)
 
@@ -26,10 +20,7 @@ def main_page():
     with col3:
         st.write(' ')
     st.markdown("<h1 style='text-align: center; color: white;'>DE CARA HACIA EL FUTURO</h1>", unsafe_allow_html=True) 
-    #st.sidebar.markdown('''
-	#* La Revolución Henry 
-	#* El HENRYCOIN
-	#* Crisis U Oportunidad''')
+ 
 
     st.markdown('''
 	### "Estamos repensando la educación en latinoamerica para brindar oportunidades y desarrollar talento. Súmate a nuestra revolución."
@@ -54,7 +45,7 @@ def pageII():
    
 def pageIII():  
     st.markdown("<h3 style='text-align: center; color: white;'>¿OTRO CRIPTOINVIERNO?</h1>", unsafe_allow_html=True)
-    #st.sidebar.markdown('CRIPTOMONEDA')
+    
     market_name = 'BTC'
     resolution = 60 * 60
     start = round(time.time() - 24*60*60) 
@@ -90,14 +81,13 @@ def pageIII():
     st.sidebar.markdown(msj)
 
     fig = make_subplots(rows=2, cols=1, shared_xaxes=True, 
-                        vertical_spacing=0.1, subplot_titles=('OHLC', 'Volume'), 
+                        vertical_spacing=0.1, subplot_titles=(market_name, 'Volume'), 
                         row_width=[0.2, 0.7],column_widths=[2])
 
 # Plot OHLC on 1st row
     fig.add_trace(go.Candlestick(x = df.index, open = df['open'], high = df['high'], low = df['low'], close = df['close'], name="OHLC")
-                #,go.Scatter(x=df.index, y=df['20 SMA'], line=dict(color='purple', width=1))]),
-                , row=1, col=1)
-    fig.add_trace(go.Scatter(x=df.index, y=df['20 SMA'], line=dict(color='purple', width=1)), row=1, col=1)
+                  , row=1, col=1)
+    fig.add_trace(go.Scatter(x=df.index, y=df['20 SMA'], line=dict(color='yellow', width=1)), row=1, col=1)
 
 # Bar trace for volumes on 2nd row without legend
     fig.add_trace(go.Bar(x=df.index, y=df['volume'], showlegend=False), row=2, col=1)
@@ -125,14 +115,14 @@ def pageIV():
     #st.dataframe(df)
 
     fig = make_subplots(rows=2, cols=1, shared_xaxes=True, 
-                        vertical_spacing=0.1, subplot_titles=('OHLC', 'Volume'), 
+                        vertical_spacing=0.1, subplot_titles=(symbol, 'Volume'), 
                         row_width=[0.2, 0.7],column_widths=[2])
 
 # Plot OHLC on 1st row
     fig.add_trace(go.Candlestick(x = df.index, open = df['open'], high = df['high'], low = df['low'], close = df['close'], name="OHLC")
                 #,go.Scatter(x=df.index, y=df['20 SMA'], line=dict(color='purple', width=1))]),
                 , row=1, col=1)
-    fig.add_trace(go.Scatter(x=df.index, y=df['20 SMA'], line=dict(color='purple', width=1)), row=1, col=1)
+    fig.add_trace(go.Scatter(x=df.index, y=df['20 SMA'], line=dict(color='yellow', width=1)), row=1, col=1)
     
 
 # Bar trace for volumes on 2nd row without legend
@@ -142,26 +132,32 @@ def pageIV():
     fig.update(layout_xaxis_rangeslider_visible=False)
     st.plotly_chart(fig)
 
-def pageVI():
-    #st.markdown("<h3 style='text-align: center; color: black;'>INFLACION EN ESTADOS UNIDOS</h1>", unsafe_allow_html=True)
-    image = Image.open('images/united-states-inflation-cpi.png')
-    st.image(image)
-    #col1, col2, col3 = st.columns(3)
+def pageV():
+    st.markdown("<h3 style='text-align: center; color: white;'>INDICE DEL MIEDO Y CODICIA</h1>", unsafe_allow_html=True)
+    f = open('miedo.png','wb')
+    response = requests.get('https://alternative.me/crypto/fear-and-greed-index.png')
+    f.write(response.content)
+    f.close()
+    image = Image.open('miedo.png')
+    st.sidebar.image(image)
+    
+    url2 = 'https://api.alternative.me/fng/?limit=180'
+    res = requests.get(url2).json()
+    df = pd.DataFrame(res['data'])
+    df['timestamp'] = df['timestamp'].astype(int, errors = 'raise')
+    df['value'] = df['value'].astype(int, errors = 'raise')
+    df['timestamp'] = pd.to_datetime(df['timestamp'], unit='s')
 
-    #with col1:
-     #   st.write(' ')
+    fig = make_subplots(rows=1, cols=1, column_widths=[3])
+    fig.add_trace(go.Scatter(x=df['timestamp'], y=df['value'], line=dict(color='yellow', width=1)))
+    st.plotly_chart(fig)
 
-    #with col2:
-     #   st.image(image)
-
-    #with col3:
-     #   st.write(' ')
 page_names_to_funcs = {
     'I. Introducción': main_page,
     'II. ¿Es el momento oportuno?': pageII,
     'III. El CriptoInvierno' : pageIII,
     'IV. Las Acciones de las Empresas Tecnológicas': pageIV,
-    'VI. La Inflacion en Estados Unidos y la Cotización del Dólar' : pageVI
+    'V. El Indice de Miedo y Codicia' : pageV
 }
 
 selected_page = st.sidebar.selectbox("Seleccione página", page_names_to_funcs.keys())
